@@ -11,7 +11,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "arm64-v8a"
+			"value" : "x86"
 		},
 		{
 			"name" : "ANDROID_NDK",
@@ -23,7 +23,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973"
 		},
 		{
 			"name" : "ANDROID_PLATFORM",
@@ -51,7 +51,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-addr2line"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-addr2line"
 		},
 		{
 			"name" : "CMAKE_ANDROID_ARCH_ABI",
@@ -63,7 +63,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "arm64-v8a"
+			"value" : "x86"
 		},
 		{
 			"name" : "CMAKE_ANDROID_NDK",
@@ -75,7 +75,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973"
 		},
 		{
 			"name" : "CMAKE_AR",
@@ -91,7 +91,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
 		},
 		{
 			"name" : "CMAKE_ASM_FLAGS",
@@ -151,7 +151,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/android/app/.cxx/Debug/3733ik42/arm64-v8a"
+			"value" : "/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/android/app/.cxx/Debug/93b283a1/x86"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -255,7 +255,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_RANLIB",
@@ -271,7 +271,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib"
 		},
 		{
 			"name" : "CMAKE_CXX_FLAGS",
@@ -399,7 +399,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ar"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_RANLIB",
@@ -415,7 +415,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib"
 		},
 		{
 			"name" : "CMAKE_C_FLAGS",
@@ -527,7 +527,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "CMAKE_DLLTOOL-NOTFOUND"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-dlltool"
 		},
 		{
 			"name" : "CMAKE_EDIT_COMMAND",
@@ -763,7 +763,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/build/app/intermediates/cxx/Debug/3733ik42/obj/arm64-v8a"
+			"value" : "/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/build/app/intermediates/cxx/Debug/93b283a1/obj/x86"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -779,7 +779,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld.lld"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/ld.lld"
 		},
 		{
 			"name" : "CMAKE_MAKE_PROGRAM",
@@ -887,7 +887,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-nm"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-nm"
 		},
 		{
 			"name" : "CMAKE_NUMBER_OF_MAKEFILES",
@@ -915,7 +915,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objcopy"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objcopy"
 		},
 		{
 			"name" : "CMAKE_OBJDUMP",
@@ -931,7 +931,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objdump"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-objdump"
 		},
 		{
 			"name" : "CMAKE_PLATFORM_INFO_INITIALIZED",
@@ -995,7 +995,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-ranlib"
 		},
 		{
 			"name" : "CMAKE_READELF",
@@ -1011,7 +1011,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-readelf"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-readelf"
 		},
 		{
 			"name" : "CMAKE_ROOT",
@@ -1035,7 +1035,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/build/app/intermediates/cxx/Debug/3733ik42/obj/arm64-v8a"
+			"value" : "/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/build/app/intermediates/cxx/Debug/93b283a1/obj/x86"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1243,7 +1243,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-strip"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/darwin-x86_64/bin/llvm-strip"
 		},
 		{
 			"name" : "CMAKE_SUPPRESS_DEVELOPER_ERRORS",
@@ -1303,7 +1303,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/android.toolchain.cmake"
+			"value" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android.toolchain.cmake"
 		},
 		{
 			"name" : "CMAKE_UNAME",
@@ -1355,7 +1355,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/android/app/.cxx/Debug/3733ik42/arm64-v8a"
+			"value" : "/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/android/app/.cxx/Debug/93b283a1/x86"
 		},
 		{
 			"name" : "Project_IS_TOP_LEVEL",

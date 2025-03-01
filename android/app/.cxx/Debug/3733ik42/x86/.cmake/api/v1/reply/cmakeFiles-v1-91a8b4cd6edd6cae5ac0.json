@@ -11,15 +11,15 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android.toolchain.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/android.toolchain.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android-legacy.toolchain.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/android-legacy.toolchain.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/platforms.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/platforms.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -28,7 +28,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Android-Determine.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Android-Determine.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -41,7 +41,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/android.toolchain.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/android.toolchain.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -55,7 +55,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Android-Initialize.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Android-Initialize.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -79,7 +79,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Determine-Compiler.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Determine-Compiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -561,7 +561,7 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Android.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Android.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -620,11 +620,11 @@
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/hooks/pre/Android-Clang.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/hooks/pre/Android-Clang.cmake"
 		},
 		{
 			"isExternal" : true,
-			"path" : "/Users/jasony/Library/Android/sdk/ndk/27.0.12077973/build/cmake/flags.cmake"
+			"path" : "/Users/jasony/Library/Android/sdk/ndk/26.3.11579264/build/cmake/flags.cmake"
 		},
 		{
 			"isCMake" : true,
