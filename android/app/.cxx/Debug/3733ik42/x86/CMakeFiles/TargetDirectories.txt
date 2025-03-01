@@ -1,0 +1,2 @@
+/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/android/app/.cxx/Debug/3733ik42/x86/CMakeFiles/edit_cache.dir
+/Users/jasony/Desktop/Codings/LikeLion/24_25/SI/android/app/.cxx/Debug/3733ik42/x86/CMakeFiles/rebuild_cache.dir

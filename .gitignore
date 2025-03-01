@@ -1,0 +1,50 @@
+# Flutter related files
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+build/
+# Ignore generated files by Flutter
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/.symlinks/
+ios/Pods/
+ios/.dart_tool/
+android/.gradle/
+android/app/build/
+android/app/*.keystore
+android/key.properties
+
+# Android Studio specific files
+.idea/
+*.iml
+*.hprof
+*.log
+/local.properties
+.gradle/
+captures/
+
+# Ignore VS Code settings if using it
+.vscode/
+
+# MacOS generated files
+.DS_Store
+
+# Windows generated files
+Thumbs.db
+
+# JetBrains related files
+*.ipr
+*.iws
+out/
+
+# Miscellaneous
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Google Services (if using Firebase)
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
