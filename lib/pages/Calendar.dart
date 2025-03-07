@@ -64,7 +64,6 @@ class _CalendarPageState extends State<CalendarPage> {
                         style: ElevatedButton.styleFrom(
                           shape: CircleBorder(),
                           backgroundColor: Colors.transparent, // Button color
-                          foregroundColor: Colors.cyan,
                         ),
                       ),
                     ],
