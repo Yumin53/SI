@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:si/firebase_options.dart';
 import 'package:si/pages/home_page.dart';
 import 'package:si/pages/login_page.dart';
+import 'package:si/pages/calendar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +27,7 @@ class Myapp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            return const HomePage();
+            return CalendarPage();
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
