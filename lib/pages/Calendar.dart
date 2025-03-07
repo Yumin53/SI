@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:si/pages/home_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:si/pages/profile.dart';
 
 void main() {
   runApp(
@@ -50,7 +51,12 @@ class _CalendarPageState extends State<CalendarPage> {
                   child: Row(
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ProfilePage()),
+                          );
+                        },
                         child: Container(
                           width: 120,
                           height: 120,
