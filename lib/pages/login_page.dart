@@ -37,8 +37,8 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
                 onPressed: () {
                   FireauthService().signin(
-                    email: _emailController.text,
-                    password: _passwordController.text,
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
                   );
                 },
                 child: const Text('Login'),
@@ -46,11 +46,16 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
                 onPressed: () {
                   FireauthService().signup(
-                      email: _emailController.text,
-                      password: _passwordController.text,
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim(),
                   );
                 },
-                child: const Text('SignUp'))
+                child: const Text('SignUp'),
+            ),
+            ElevatedButton(
+              onPressed: FireauthService().googleSignin,
+              child: const Text('GoogleSignin'),
+            ),
           ],
         ),
       ),
