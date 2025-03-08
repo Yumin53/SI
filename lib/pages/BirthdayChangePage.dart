@@ -39,7 +39,7 @@ void showBirthdayChangeDialog(BuildContext context, Function(String) updateBirth
                     ),
                     SizedBox(height: 20),
 
-                    // 🔹 생일 입력 드롭다운 버튼
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -101,7 +101,7 @@ void showBirthdayChangeDialog(BuildContext context, Function(String) updateBirth
                     ),
                     SizedBox(height: 30),
 
-                    // 🔹 취소 & 확인 버튼
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
