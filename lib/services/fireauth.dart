@@ -6,6 +6,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 class FireauthService {
   final double errorFontSize = 18.0;
 
+  void displayError(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.SNACKBAR,
+      backgroundColor: Colors.black54,
+      textColor: Colors.white,
+      fontSize: errorFontSize,
+    );
+  }
+
   Future<void> googleSignin () async {
     final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
 

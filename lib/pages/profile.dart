@@ -1,6 +1,12 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:social_impact_project/NicknameChangePage.dart';
-import 'package:social_impact_project/BirthdayChangePage.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../services/BirthdayChangePage.dart';
+import '../services/NicknameChangePage.dart';
+import '../services/firestore.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -12,6 +18,34 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String nickname = "유저 이름 ABC";
   String birthday = "YYYY/MM/DD";
+  File? _selectedImage;
+
+  Future<void> getUserData() async {
+    String? name = await FirestoreService().getUserData('name');  // Call the function from the imported file
+    setState(() {
+      nickname = name ?? nickname;
+    });
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (returnedImage == null) {
+      setState(() {
+        _selectedImage = null;
+      });
+      return;
+    }
+    setState(() {
+      _selectedImage = File(returnedImage.path);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
 
   void updateNickname(String newNickname) {
     setState(() {
@@ -36,6 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             if (Navigator.canPop(context)) {
+              FirebaseAuth.instance.signOut();
               Navigator.of(context).pop();
             }
           },
@@ -52,20 +87,17 @@ class _ProfilePageState extends State<ProfilePage> {
               clipBehavior: Clip.none,
               alignment: Alignment.bottomRight,
               children: [
-                CircleAvatar(
-                    radius: 76,
-                    backgroundColor: const Color(0xffD9D9D9)
-                ),
-                Positioned(right: 9, bottom: 8, child: GestureDetector(
-                  child: Container(padding: EdgeInsets.all(4),decoration: BoxDecoration(color: Colors.black, shape: BoxShape.circle,
-                  ),
-                    child: Icon(
-                      Icons.edit,
-                      size: 30,
-                      color: Colors.white,
+                GestureDetector(
+                  onTap: _pickImageFromGallery,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 150,
+                    width: 150,
+                    child: _selectedImage != null ? Image.file(_selectedImage!) : const CircleAvatar(
+                        radius: 76,
+                        backgroundColor: Color(0xffD9D9D9)
                     ),
                   ),
-                ),
                 ),
               ],
             ),
