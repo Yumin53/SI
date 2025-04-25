@@ -69,10 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
           padding: EdgeInsets.only(left: 15, top: 35),
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            if (Navigator.canPop(context)) {
               FirebaseAuth.instance.signOut();
-              Navigator.of(context).pop();
-            }
           },
         ),
       ),

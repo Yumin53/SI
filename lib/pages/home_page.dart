@@ -27,8 +27,7 @@ class _HomePageState extends State<HomePage> {
   final _textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
+    return Scaffold(
             backgroundColor:Color.fromRGBO(239, 244, 236, 1),
             appBar: AppBar(
               leading:BackButton(
@@ -567,7 +566,6 @@ class _HomePageState extends State<HomePage> {
 
                 )
             )
-        )
-    );
+        );
   }
 }

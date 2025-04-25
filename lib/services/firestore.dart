@@ -29,12 +29,19 @@ class FirestoreService {
   }
 
   // CREATE
-  Future<void> addNote(String note) {
-    return notes.add({
-      'note': note,
+  Future<void> addUser(
+      String email,
+      String name,
+      ) async {
+    await FirebaseFirestore.instance.collection('Users')
+        .doc(email)
+        .set({
+      'email': email,
+      'name': name,
       'timestamp': Timestamp.now(),
     });
   }
+
 
   // READ
   Stream<QuerySnapshot> getNotesStream() {

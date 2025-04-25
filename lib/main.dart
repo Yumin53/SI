@@ -28,8 +28,9 @@ class Myapp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
+            return const CalendarPage();
             return const ProfilePage();
-            return const HomePage();
+            // return const HomePage();
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
