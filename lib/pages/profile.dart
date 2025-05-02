@@ -4,9 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../services/BirthdayChangePage.dart';
-import '../services/NicknameChangePage.dart';
+import '../services/birthday_change_page.dart';
+import '../services/nickname_change_page.dart';
 import '../services/firestore.dart';
+import 'package:si/pages/home_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -65,11 +66,9 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: const Color(0xffF8F7F9),
       appBar: AppBar(
         backgroundColor: const Color(0xffF8F7F9),
-        leading: IconButton(
-          padding: EdgeInsets.only(left: 15, top: 35),
-          icon: Icon(Icons.arrow_back),
+        leading: BackButton(
           onPressed: () {
-              FirebaseAuth.instance.signOut();
+            Navigator.pop(context);
           },
         ),
       ),
@@ -96,8 +95,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ]
+                ),
             SizedBox(height: 20),
             Text(nickname, style: TextStyle(fontSize: 22, color: const Color(0xff1E1E1E))),
             SizedBox(height: 5),
@@ -155,7 +154,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ],
         ),
-      ),
+        ),
     );
   }
 }

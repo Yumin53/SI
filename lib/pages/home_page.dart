@@ -2,47 +2,82 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final DateTime selectedDate;
+  const HomePage({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+
+
+  bool isYellowSelected = false;
+  int yellowValue = 0;
+
+  bool isOrangeSelected = false;
+  int orangeValue = 0;
+  bool isOrange2Selected = false;
+  int orange2Value = 0;
+  bool isGreySelected = false;
+  int greyValue = 0;
+  bool isBrownSelected = false;
+  int brownValue = 0;
+
   bool isChecked1 = false;
+  int check1Value = 0;
   bool isChecked2 = false;
+  int check2Value = 0;
   bool isChecked3 = false;
+  int check3Value = 0;
   bool isChecked4 = false;
+  int check4Value = 0;
+
   bool isCloudSelected = false;
+  int cloudValue = 0;
   bool isSunSelected = false;
+  int sunnyValue = 0;
   bool isWindSelected = false;
+  int windValue = 0;
   bool isRainSelected = false;
+  int rainValue = 0;
   bool isSnowSelected = false;
+  int snowValue = 0;
+
   bool isShopSelected = false;
+  int shopValue = 0;
   bool isDateSelected = false;
+  int dateValue = 0;
   bool isSportsSelected = false;
+  int sportsValue = 0;
   bool isHomeSelected = false;
+  int homeValue = 0;
   bool isBookSelected = false;
+  int bookValue = 0;
+
 
   final _textController = TextEditingController();
+  String diaryEntry = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-            backgroundColor:Color.fromRGBO(239, 244, 236, 1),
-            appBar: AppBar(
-              leading:BackButton(
-                  onPressed:(){
-                    FirebaseAuth.instance.signOut();
-                  }
-              ),
-              title: Text('12월 23일 월요일',
-                style: TextStyle(
-                  fontFamily: 'Jalnan2TTF',
-                  fontSize: 24,
-                ),
-              ),
-              backgroundColor: Color.fromRGBO(239, 244, 236, 1),
+        backgroundColor:Color.fromRGBO(239, 244, 236, 1),
+        appBar: AppBar(
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Text(
+            '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일',
+            style: TextStyle(
+              fontFamily: 'Jalnan2TTF',
+              fontSize: 24,
             ),
+          ),
+          backgroundColor: Color.fromRGBO(239, 244, 236, 1),
+        ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             floatingActionButton: SizedBox(
               width: 251,
@@ -56,7 +91,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onPressed: (){
-
+                  setState(() {
+                    // Save the diary entry text.
+                    diaryEntry = _textController.text;
+                    // (Process any other state variables as needed)
+                  });
+                  print('Diary for ${widget.selectedDate}: $diaryEntry');
+                  // ADDED: Once saved, pop and return true so CalendarPage marks the day.
+                  Navigator.pop(context, true);
                 },
                 backgroundColor: Color.fromRGBO(43,167,62, 1),
               ),
@@ -77,32 +119,182 @@ class _HomePageState extends State<HomePage> {
                                     Radius.circular(30)
                                 )
                             ),
-                            child:Column(
-                                children: [
-                                  SizedBox(height:28),
-                                  Text('오늘의 꽃은 무슨 색인가요?',
-                                    style: TextStyle(
-                                      fontFamily: 'Jalnan2TTF',
-                                      fontSize: 18,
-                                    ),
-                                    textAlign: TextAlign.center,
+                            child: Column(
+                              children: [
+                                SizedBox(height: 28),
+                                Text(
+                                  '오늘의 꽃은 무슨 색인가요?',
+                                  style: TextStyle(
+                                    fontFamily: 'Jalnan2TTF',
+                                    fontSize: 18,
                                   ),
-                                  SizedBox(height:22),
-                                  Container(
-                                      child:Row(
-                                          children: [
-                                            SizedBox(width:15),
-                                            FlutterLogo(size:50),
-                                            SizedBox(width:17.25),
-                                            FlutterLogo(size:50),
-                                            SizedBox(width:17.25),
-                                            FlutterLogo(size:50),
-                                            SizedBox(width:17.25),
-                                            FlutterLogo(size:50),
-                                            SizedBox(width:15)
-                                          ])
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 10),
+                                Container(
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: 15),
+                                      // Yellow Button
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            if (!isYellowSelected) {
+                                              // Turn on yellow and turn off others
+                                              yellowValue = 1;
+                                              isYellowSelected = true;
+
+                                              isOrangeSelected = false;
+                                              orangeValue = 0;
+                                              isOrange2Selected = false;
+                                              orange2Value = 0;
+                                              isGreySelected = false;
+                                              greyValue = 0;
+                                              isBrownSelected = false;
+                                              brownValue = 0;
+                                            } else {
+                                              // Toggle off if already selected
+                                              isYellowSelected = false;
+                                              yellowValue = 0;
+                                            }
+                                          });
+                                        },
+                                        icon: Opacity(
+                                          opacity: isYellowSelected ? 1.0 : 0.5,
+                                          child: Image.asset(
+                                            "lib/icons/1.png",
+                                            width: 47,
+                                            height: 50,
+                                          ),
+                                        ),
+                                      ),
+                                      // Orange Button
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            if (!isOrangeSelected) {
+                                              isYellowSelected = false;
+                                              yellowValue = 0;
+                                              isOrangeSelected = true;
+                                              orangeValue = 1;
+                                              isOrange2Selected = false;
+                                              orange2Value = 0;
+                                              isGreySelected = false;
+                                              greyValue = 0;
+                                              isBrownSelected = false;
+                                              brownValue = 0;
+                                            } else {
+                                              isOrangeSelected = false;
+                                              orangeValue = 0;
+                                            }
+                                          });
+                                        },
+                                        icon: Opacity(
+                                          opacity: isOrangeSelected ? 1.0 : 0.5,
+                                          child: Image.asset(
+                                            "lib/icons/2.png",
+                                            width: 47,
+                                            height: 50,
+                                          ),
+                                        ),
+                                      ),
+                                      // Orange2 Button
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            if (!isOrange2Selected) {
+                                              isYellowSelected = false;
+                                              yellowValue = 0;
+                                              isOrangeSelected = false;
+                                              orangeValue = 0;
+                                              isOrange2Selected = true;
+                                              orange2Value = 1;
+                                              isGreySelected = false;
+                                              greyValue = 0;
+                                              isBrownSelected = false;
+                                              brownValue = 0;
+                                            } else {
+                                              isOrange2Selected = false;
+                                              orange2Value = 0;
+                                            }
+                                          });
+                                        },
+                                        icon: Opacity(
+                                          opacity: isOrange2Selected ? 1.0 : 0.5,
+                                          child: Image.asset(
+                                            "lib/icons/3.png",
+                                            width: 47,
+                                            height: 50,
+                                          ),
+                                        ),
+                                      ),
+                                      // Grey Button
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            if (!isGreySelected) {
+                                              isYellowSelected = false;
+                                              yellowValue = 0;
+                                              isOrangeSelected = false;
+                                              orangeValue = 0;
+                                              isOrange2Selected = false;
+                                              orange2Value = 0;
+                                              isGreySelected = true;
+                                              greyValue = 1;
+                                              isBrownSelected = false;
+                                              brownValue = 0;
+                                            } else {
+                                              isGreySelected = false;
+                                              greyValue = 0;
+                                            }
+                                          });
+                                        },
+                                        icon: Opacity(
+                                          opacity: isGreySelected ? 1.0 : 0.5,
+                                          child: Image.asset(
+                                            "lib/icons/4.png",
+                                            width: 47,
+                                            height: 50,
+                                          ),
+                                        ),
+                                      ),
+                                      // Brown Button
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            if (!isBrownSelected) {
+                                              isYellowSelected = false;
+                                              yellowValue = 0;
+                                              isOrangeSelected = false;
+                                              orangeValue = 0;
+                                              isOrange2Selected = false;
+                                              orange2Value = 0;
+                                              isGreySelected = false;
+                                              greyValue = 0;
+                                              isBrownSelected = true;
+                                              brownValue = 1;
+                                            } else {
+                                              isBrownSelected = false;
+                                              brownValue = 0;
+                                            }
+                                          });
+                                        },
+                                        icon: Opacity(
+                                          opacity: isBrownSelected ? 1.0 : 0.5,
+                                          child: Image.asset(
+                                            "lib/icons/5.png",
+                                            width: 47,
+                                            height: 50,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 15),
+                                    ],
                                   ),
-                                ])
+                                ),
+                              ],
+                            )
+
                         ),
                         Container(
                             width:350,
@@ -123,7 +315,7 @@ class _HomePageState extends State<HomePage> {
                                         fontSize: 18,
                                       ),
                                       textAlign: TextAlign.center),
-                                  SizedBox(height: 32),
+                                  SizedBox(height: 22),
                                   Container(
                                     child: Row(
                                       children: [
@@ -131,6 +323,7 @@ class _HomePageState extends State<HomePage> {
                                         Checkbox(value: isChecked1, onChanged: (val){
                                           setState(() {
                                             isChecked1 =val!;
+                                            check1Value = isChecked1 ? 1 : 0;
                                           });
                                         }),
                                         SizedBox(width:24),
@@ -150,6 +343,7 @@ class _HomePageState extends State<HomePage> {
                                         Checkbox(value: isChecked2, onChanged: (val){
                                           setState(() {
                                             isChecked2 =val!;
+                                            check2Value = isChecked2 ? 1 : 0;
                                           });
                                         }),
                                         SizedBox(width:24),
@@ -169,6 +363,7 @@ class _HomePageState extends State<HomePage> {
                                         Checkbox(value: isChecked3, onChanged: (val){
                                           setState(() {
                                             isChecked3 =val!;
+                                            check3Value = isChecked3 ? 1 : 0;
                                           });
                                         }),
                                         SizedBox(width:24),
@@ -188,6 +383,7 @@ class _HomePageState extends State<HomePage> {
                                         Checkbox(value: isChecked4, onChanged: (val){
                                           setState(() {
                                             isChecked4 =val!;
+                                            check4Value = isChecked4 ? 1 : 0;
                                           });
                                         }),
                                         SizedBox(width:24),
@@ -231,6 +427,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isSunSelected = !isSunSelected;
+                                                  sunnyValue = isSunSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -248,6 +445,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isCloudSelected = !isCloudSelected;
+                                                  cloudValue = isCloudSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -265,6 +463,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isWindSelected = !isWindSelected;
+                                                  windValue = isWindSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -282,6 +481,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isRainSelected = !isRainSelected;
+                                                  rainValue = isRainSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -299,6 +499,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isSnowSelected = !isSnowSelected;
+                                                  snowValue = isSnowSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -393,6 +594,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isShopSelected = !isShopSelected;
+                                                  shopValue = isShopSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -410,6 +612,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isDateSelected = !isDateSelected;
+                                                  dateValue = isDateSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -428,6 +631,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isSportsSelected = !isSportsSelected;
+                                                  sportsValue = isSportsSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -446,6 +650,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isHomeSelected = !isHomeSelected;
+                                                  homeValue = isHomeSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -464,6 +669,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isBookSelected = !isBookSelected;
+                                                  bookValue = isBookSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
