@@ -157,8 +157,8 @@ class _ProfilePageState extends State<ProfilePage> {
             GestureDetector(
               onTap: () {
                 FireauthService().signout(context);
-                if (context.mounted) Navigator.pop(context);
-                },
+                if (context.mounted) Navigator.of(context).popUntil((route) => route.isFirst);
+              },
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.red,

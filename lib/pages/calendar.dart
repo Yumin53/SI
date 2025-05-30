@@ -63,7 +63,7 @@ class _CalendarPageState extends State<CalendarPage> {
                   ),
                 ),
 
-                const SizedBox(height: 25),
+                const SizedBox(height: 45),
                 TableCalendar(
                   focusedDay: _focusedDay,
                   firstDay: DateTime.utc(2002, 9, 6),

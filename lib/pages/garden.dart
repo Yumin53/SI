@@ -113,10 +113,7 @@ class _GardenPageState extends State<GardenPage> {
                   padding: const EdgeInsets.only(top: 10),
                   child: IconButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CalendarPage()),
-                      );
+                      Navigator.pop(context);
                     },
                     icon: Image.asset("lib/icons/pen.png", width: 120, height: 120),
                   ),

@@ -38,6 +38,7 @@ class FirestoreService {
         .set({
       'email': email,
       'name': name,
+      'streak': 0,
       'timestamp': Timestamp.now(),
     });
   }
@@ -51,6 +52,49 @@ class FirestoreService {
     return month + day + "${date.year}";
   }
 
+  void updateStreak(
+        DateTime today,
+      ) async {
+
+    int streak = await getUserData('streak');  // Call the function from the imported file
+    final lastUserUpdate = await getUserData('lastUpdate');
+    DateTime lastUpdate = DateTime.fromMicrosecondsSinceEpoch(lastUserUpdate.seconds * 1000000);
+    bool onStreak = false;
+    const monthsWith31 = [1,3,5,7,8,10,12];
+    const monthsWith30 = [4,6,9,11];
+
+    final isLeapYear = lastUpdate.year % 400 == 0 ||
+        (lastUpdate.year % 4 == 0 && lastUpdate.year % 100 != 0);
+
+    if (lastUpdate.year == today.year) {
+      if (lastUpdate.month == today.month) {
+        onStreak = (today.day - lastUpdate.day == 1);
+      }
+      else if (today.month - lastUpdate.month == 1 && today.day == 1) {
+        if (monthsWith31.contains(lastUpdate.month)) {
+          onStreak = lastUpdate.day == 31;
+        } else if (monthsWith30.contains(lastUpdate.month)) {
+          onStreak = lastUpdate.day == 30;
+        } else {
+          onStreak = isLeapYear ? lastUpdate.day == 29 : lastUpdate.day == 28;
+        }
+      }
+    } else {
+      onStreak = (today.year - lastUpdate.year == 1)
+          && (lastUpdate.month == 12) && (lastUpdate.day == 31)
+          && (today.month == 1) && (today.day == 1);
+    }
+    streak = getMMDDYYYY(today) == getMMDDYYYY(DateTime.now()) ? streak + 1: 1;
+    // streak = onStreak ? streak + 1 : 1;
+
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(currentUser!.email).set({
+      'streak': streak,
+      'lastUpdate': DateTime.now(),
+    }, SetOptions(merge: true));
+  }
+
   // CREATE
   Future<void> updateDiary(
       int? flowerIndex,
@@ -61,6 +105,11 @@ class FirestoreService {
         || currentUser!.email == null
     ) {
       return;
+    }
+
+    final today = DateTime.now();
+    if (getMMDDYYYY(today) == getMMDDYYYY(selectedDate)) {
+      updateStreak(today);
     }
 
     await FirebaseFirestore.instance
