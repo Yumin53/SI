@@ -1,9 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:si/pages/home_page.dart';
 import 'package:si/pages/profile.dart';
 import 'package:intl/intl.dart';
 import 'package:si/pages/profile.dart';
 import 'package:si/pages/calendar.dart';
+
+import '../services/firestore.dart';
 
 void main() {
   runApp(
@@ -23,17 +27,33 @@ class _GardenPageState extends State<GardenPage> {
 
   bool isreportSelected = false;
   bool istownSelected = false;
+  int streak = 0;
+  String imageUrl = '';
+
+  Future<void> getUserStreak() async {
+    await Future.delayed(const Duration(seconds: 1));
+    streak = await FirestoreService().getUserData('streak');
+    setState(() {
+      imageUrl = 'lib/icons/phase${min(streak, 4)}.png';
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserStreak();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
       child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('lib/icons/phase1.png'),
+        decoration: BoxDecoration(
+          image: imageUrl.isNotEmpty ? DecorationImage(
+            image: AssetImage(imageUrl),
             fit: BoxFit.cover,
-          ),
+          ): null,
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -63,7 +83,7 @@ class _GardenPageState extends State<GardenPage> {
                       Padding(
                         padding: const EdgeInsets.only(top: 50, left:130),
                         child: Text(
-                          "Date",
+                          "Date: $streak",
                           style: TextStyle(
                             fontFamily: 'Jalnan2TTF',
                             fontSize: 15,
