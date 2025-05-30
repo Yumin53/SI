@@ -3,6 +3,7 @@ import 'package:si/pages/home_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:si/pages/profile.dart';
+import 'package:si/pages/garden.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _CalendarPageState extends State<CalendarPage> {
   bool istownSelected = false;
   bool ispenSelected = false;
 
-  final Map<DateTime, bool> _diaryEntries = {};
+  final Map<DateTime, Map<String, dynamic>> _diaryEntries = {};
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         ),
                         style: ElevatedButton.styleFrom(
                           shape: CircleBorder(),
-                          backgroundColor: Colors.white, // Button color
+                          backgroundColor: Colors.white,
                         ),
                       ),
                     ],
@@ -108,11 +109,10 @@ class _CalendarPageState extends State<CalendarPage> {
                     ),
                   ),
 
-                  // -- BUILDERS: override how each day is built
                   calendarBuilders: CalendarBuilders(
-                    defaultBuilder: (context, day, focusedDay) {
-                      return _buildDayCell(context, day);
-                    },
+                    defaultBuilder: (context, day, focusedDay) => _buildDayCell(context, day),
+                    selectedBuilder: (context, day, focusedDay)  => _buildDayCell(context, day),
+                    todayBuilder:    (context, day, focusedDay)  => _buildDayCell(context, day),
                   ),
 
                   // This determines the selected day highlight logic:
@@ -166,10 +166,10 @@ class _CalendarPageState extends State<CalendarPage> {
                           builder: (context) => HomePage(selectedDate: selectedDate),
                         ),
                       );
-                      if (result != null && result is bool && result) {
+                      if (result != null && result is Map<String, dynamic>) {
                         setState(() {
-                          final key = DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
-                          _diaryEntries[key] = true;
+                          final key = DateUtils.dateOnly(selectedDate);
+                          _diaryEntries[key] = result;
                         });
                       }
                     },
@@ -186,6 +186,10 @@ class _CalendarPageState extends State<CalendarPage> {
                       setState(() {
                         istownSelected = !istownSelected;
                       });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => GardenPage()),
+                      );
                     },
                     icon: Image.asset("lib/icons/townbt.png", width: 45, height: 66),
                   ),
@@ -201,11 +205,32 @@ class _CalendarPageState extends State<CalendarPage> {
   /// Builds a day cell that updates the selected day.
   Widget _buildDayCell(BuildContext context, DateTime day) {
     bool isSelected = isSameDay(_selectedDay, day);
-    final normalizedDay = DateTime(day.year, day.month, day.day);
-    bool hasDiary = _diaryEntries[normalizedDay] == true;
+    final normalizedDay = DateUtils.dateOnly(day);
+    final diaryData = _diaryEntries[normalizedDay];
+    bool hasDiary = diaryData != null;
+    int colorIndex = hasDiary ? diaryData!['flowerColor'] as int : 0;
 
-    // Debug message
-    print("Building day cell for $normalizedDay, hasDiary: $hasDiary");
+    // choose icon path
+    String iconAsset;
+    switch (colorIndex) {
+      case 1:
+        iconAsset = 'lib/icons/1.png';
+        break;
+      case 2:
+        iconAsset = 'lib/icons/2.png';
+        break;
+      case 3:
+        iconAsset = 'lib/icons/3.png';
+        break;
+      case 4:
+        iconAsset = 'lib/icons/4.png';
+        break;
+      case 5:
+        iconAsset = 'lib/icons/5.png';
+        break;
+      default:
+        iconAsset = 'lib/icons/flower.png';
+    }
 
     return InkWell(
       onTap: () {
@@ -219,7 +244,9 @@ class _CalendarPageState extends State<CalendarPage> {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: isSelected ? Colors.orange : const Color.fromRGBO(236, 202, 133, 1),
+              color: isSelected
+                  ? Colors.orange
+                  : const Color.fromRGBO(236, 202, 133, 1),
               shape: BoxShape.circle,
             ),
             margin: const EdgeInsets.all(4.0),
@@ -236,11 +263,11 @@ class _CalendarPageState extends State<CalendarPage> {
             Positioned(
               top: 1,
               child: Image.asset(
-                'lib/icons/flower.png',
+                iconAsset,
                 width: 42,
                 height: 54,
               ),
-            ),
+            )
         ],
       ),
     );
