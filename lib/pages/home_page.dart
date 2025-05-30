@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:si/services/firestore.dart';
 
 class HomePage extends StatefulWidget {
   final DateTime selectedDate;
@@ -10,20 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-
-  bool isYellowSelected = false;
-  int yellowValue = 0;
-
-  bool isOrangeSelected = false;
-  int orangeValue = 0;
-  bool isOrange2Selected = false;
-  int orange2Value = 0;
-  bool isGreySelected = false;
-  int greyValue = 0;
-  bool isBrownSelected = false;
-  int brownValue = 0;
-
   bool isChecked1 = false;
   int check1Value = 0;
   bool isChecked2 = false;
@@ -58,6 +45,28 @@ class _HomePageState extends State<HomePage> {
 
   final _textController = TextEditingController();
   String diaryEntry = '';
+
+  int? _selectedIconIndex; // Stores which one is selected
+
+  // List<String> greenActivity = [
+  //   '플라스틱 사용량 줄이기'
+  //
+  // ];
+  Future<void> getUserDiary() async {
+    DocumentSnapshot<Object?> userDoc = await FirestoreService().getDiary(widget.selectedDate);  // Call the function from the imported file
+    if (userDoc.exists) {
+      setState(() {
+        _selectedIconIndex = userDoc.get('flowerIndex');
+        _textController.text = userDoc.get('diary');
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserDiary();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +105,8 @@ class _HomePageState extends State<HomePage> {
                     diaryEntry = _textController.text;
                     // (Process any other state variables as needed)
                   });
-                  print('Diary for ${widget.selectedDate}: $diaryEntry');
+                  FirestoreService()
+                      .updateDiary(_selectedIconIndex, diaryEntry, widget.selectedDate);
                   // ADDED: Once saved, pop and return true so CalendarPage marks the day.
                   Navigator.pop(context, true);
                 },
@@ -131,170 +141,38 @@ class _HomePageState extends State<HomePage> {
                                   textAlign: TextAlign.center,
                                 ),
                                 SizedBox(height: 10),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      SizedBox(width: 15),
-                                      // Yellow Button
-                                      IconButton(
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(5, (index) {
+                                    return Expanded(
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero, // no extra spacing!
                                         onPressed: () {
                                           setState(() {
-                                            if (!isYellowSelected) {
-                                              // Turn on yellow and turn off others
-                                              yellowValue = 1;
-                                              isYellowSelected = true;
-
-                                              isOrangeSelected = false;
-                                              orangeValue = 0;
-                                              isOrange2Selected = false;
-                                              orange2Value = 0;
-                                              isGreySelected = false;
-                                              greyValue = 0;
-                                              isBrownSelected = false;
-                                              brownValue = 0;
+                                            if (_selectedIconIndex == index) {
+                                              // Deselect if the selected icon is tapped again
+                                              _selectedIconIndex = null;
                                             } else {
-                                              // Toggle off if already selected
-                                              isYellowSelected = false;
-                                              yellowValue = 0;
+                                              // Select the tapped icon
+                                              _selectedIconIndex = index;
                                             }
                                           });
                                         },
                                         icon: Opacity(
-                                          opacity: isYellowSelected ? 1.0 : 0.5,
+                                          opacity: (_selectedIconIndex == index) ? 1.0 : 0.5,
                                           child: Image.asset(
-                                            "lib/icons/1.png",
-                                            width: 47,
-                                            height: 50,
+                                            'lib/icons/${index + 1}.png',
+                                            width: 60,  // set your desired width
+                                            height: 60, // and height
+                                            fit: BoxFit.contain, // makes sure images scale down if needed
                                           ),
                                         ),
                                       ),
-                                      // Orange Button
-                                      IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (!isOrangeSelected) {
-                                              isYellowSelected = false;
-                                              yellowValue = 0;
-                                              isOrangeSelected = true;
-                                              orangeValue = 1;
-                                              isOrange2Selected = false;
-                                              orange2Value = 0;
-                                              isGreySelected = false;
-                                              greyValue = 0;
-                                              isBrownSelected = false;
-                                              brownValue = 0;
-                                            } else {
-                                              isOrangeSelected = false;
-                                              orangeValue = 0;
-                                            }
-                                          });
-                                        },
-                                        icon: Opacity(
-                                          opacity: isOrangeSelected ? 1.0 : 0.5,
-                                          child: Image.asset(
-                                            "lib/icons/2.png",
-                                            width: 47,
-                                            height: 50,
-                                          ),
-                                        ),
-                                      ),
-                                      // Orange2 Button
-                                      IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (!isOrange2Selected) {
-                                              isYellowSelected = false;
-                                              yellowValue = 0;
-                                              isOrangeSelected = false;
-                                              orangeValue = 0;
-                                              isOrange2Selected = true;
-                                              orange2Value = 1;
-                                              isGreySelected = false;
-                                              greyValue = 0;
-                                              isBrownSelected = false;
-                                              brownValue = 0;
-                                            } else {
-                                              isOrange2Selected = false;
-                                              orange2Value = 0;
-                                            }
-                                          });
-                                        },
-                                        icon: Opacity(
-                                          opacity: isOrange2Selected ? 1.0 : 0.5,
-                                          child: Image.asset(
-                                            "lib/icons/3.png",
-                                            width: 47,
-                                            height: 50,
-                                          ),
-                                        ),
-                                      ),
-                                      // Grey Button
-                                      IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (!isGreySelected) {
-                                              isYellowSelected = false;
-                                              yellowValue = 0;
-                                              isOrangeSelected = false;
-                                              orangeValue = 0;
-                                              isOrange2Selected = false;
-                                              orange2Value = 0;
-                                              isGreySelected = true;
-                                              greyValue = 1;
-                                              isBrownSelected = false;
-                                              brownValue = 0;
-                                            } else {
-                                              isGreySelected = false;
-                                              greyValue = 0;
-                                            }
-                                          });
-                                        },
-                                        icon: Opacity(
-                                          opacity: isGreySelected ? 1.0 : 0.5,
-                                          child: Image.asset(
-                                            "lib/icons/4.png",
-                                            width: 47,
-                                            height: 50,
-                                          ),
-                                        ),
-                                      ),
-                                      // Brown Button
-                                      IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (!isBrownSelected) {
-                                              isYellowSelected = false;
-                                              yellowValue = 0;
-                                              isOrangeSelected = false;
-                                              orangeValue = 0;
-                                              isOrange2Selected = false;
-                                              orange2Value = 0;
-                                              isGreySelected = false;
-                                              greyValue = 0;
-                                              isBrownSelected = true;
-                                              brownValue = 1;
-                                            } else {
-                                              isBrownSelected = false;
-                                              brownValue = 0;
-                                            }
-                                          });
-                                        },
-                                        icon: Opacity(
-                                          opacity: isBrownSelected ? 1.0 : 0.5,
-                                          child: Image.asset(
-                                            "lib/icons/5.png",
-                                            width: 47,
-                                            height: 50,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 15),
-                                    ],
-                                  ),
+                                    );
+                                  }),
                                 ),
                               ],
                             )
-
                         ),
                         Container(
                             width:350,

@@ -4,8 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:si/firebase_options.dart';
-import 'package:si/pages/login_page.dart';
+import 'package:si/pages/auth/auth_page.dart';
 import 'package:si/pages/calendar.dart';
+import 'package:si/theme/dark_mode.dart';
+import 'package:si/theme/light_mode.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,17 +24,19 @@ class Myapp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: lightMode,
+      darkTheme: darkMode,
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            return CalendarPage();
+            return const CalendarPage();
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          return const LoginPage();
+          return const AuthPage();
         },
       ),
     );

@@ -42,6 +42,55 @@ class FirestoreService {
     });
   }
 
+  // Helper function
+  String getMMDDYYYY(DateTime date) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    String month = twoDigits(date.month);
+    String day = twoDigits(date.day);
+
+    return month + day + "${date.year}";
+  }
+
+  // CREATE
+  Future<void> updateDiary(
+      int? flowerIndex,
+      String diary,
+      DateTime selectedDate,
+      ) async {
+    if (currentUser == null
+        || currentUser!.email == null
+    ) {
+      return;
+    }
+
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(currentUser!.email)
+        .collection('Diary')
+        .doc(getMMDDYYYY(selectedDate))
+        .set({
+      'flowerIndex': flowerIndex,
+      'diary': diary
+    }, SetOptions(merge: true));
+  }
+
+  // READ
+  Future<dynamic> getDiary(DateTime selectedDate) async {
+    String mmddyyyy = getMMDDYYYY(selectedDate);
+
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(currentUser!.email)
+        .collection('Diary')
+        .doc(mmddyyyy)
+        .get();
+
+    if (userDoc.exists) {
+      return userDoc;
+    } else {
+      return;
+    }
+  }
 
   // READ
   Stream<QuerySnapshot> getNotesStream() {
