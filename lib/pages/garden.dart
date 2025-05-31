@@ -9,13 +9,6 @@ import 'package:si/pages/calendar.dart';
 
 import '../services/firestore.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: GardenPage(),
-    ),
-  );
-}
 class GardenPage extends StatefulWidget {
   const GardenPage({Key? key}) : super(key: key);
 
@@ -27,11 +20,10 @@ class _GardenPageState extends State<GardenPage> {
 
   bool isreportSelected = false;
   bool istownSelected = false;
-  int streak = 0;
+  int streak = 1;
   String imageUrl = '';
 
   Future<void> getUserStreak() async {
-    await Future.delayed(const Duration(seconds: 1));
     streak = await FirestoreService().getUserData('streak');
     setState(() {
       imageUrl = 'lib/icons/phase${min(streak, 4)}.png';

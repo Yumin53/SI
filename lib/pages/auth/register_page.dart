@@ -25,13 +25,15 @@ class RegisterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // logo
-            Icon(
-              Icons.recycling_rounded,
-              size: 80,
-              color: Theme.of(context).colorScheme.inversePrimary,
+            SizedBox(
+              width: double.infinity,
+              child: Image.asset(
+                'lib/icons/logo.png',
+                height: 180,
+                alignment: Alignment.center,
+                fit: BoxFit.fitWidth,
+              ),
             ),
-
-            const SizedBox(height: 25,),
 
             // app name
             Text(
