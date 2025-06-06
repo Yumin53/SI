@@ -85,8 +85,10 @@ class FirestoreService {
           && (lastUpdate.month == 12) && (lastUpdate.day == 31)
           && (today.month == 1) && (today.day == 1);
     }
-    streak = getMMDDYYYY(today) == getMMDDYYYY(DateTime.now()) ? streak + 1: 1;
-    // streak = onStreak ? streak + 1 : 1;
+
+    // // To test if streak works
+    // streak = getMMDDYYYY(today) == getMMDDYYYY(DateTime.now()) ? streak + 1: 1;
+    streak = onStreak ? streak + 1 : 1;
 
     await FirebaseFirestore.instance
         .collection('Users')
