@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:social_impact_project/NicknameChangePage.dart';
-import 'package:social_impact_project/BirthdayChangePage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:si/services/fireauth.dart';
+
+import '../services/birthday_change_page.dart';
+import '../services/nickname_change_page.dart';
+import '../services/firestore.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -10,12 +16,43 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String nickname = "유저 이름 ABC";
+  String user_name = "유저 이름 ABC";
+  String user_email = "abc@email.com";
   String birthday = "YYYY/MM/DD";
+  File? _selectedImage;
+
+  Future<void> getUserData() async {
+    String? name = await FirestoreService().getUserData('name');  // Call the function from the imported file
+    String? email = await FirestoreService().getUserData('email');
+    setState(() {
+      user_name = name ?? user_name;
+      user_email = email ?? user_email;
+    });
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if (returnedImage == null) {
+      setState(() {
+        _selectedImage = null;
+      });
+      return;
+    }
+    setState(() {
+      _selectedImage = File(returnedImage.path);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserData();
+  }
 
   void updateNickname(String newNickname) {
     setState(() {
-      nickname = newNickname;
+      user_name = newNickname;
     });
   }
 
@@ -31,13 +68,9 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: const Color(0xffF8F7F9),
       appBar: AppBar(
         backgroundColor: const Color(0xffF8F7F9),
-        leading: IconButton(
-          padding: EdgeInsets.only(left: 15, top: 35),
-          icon: Icon(Icons.arrow_back),
+        leading: BackButton(
           onPressed: () {
-            if (Navigator.canPop(context)) {
-              Navigator.of(context).pop();
-            }
+            Navigator.pop(context);
           },
         ),
       ),
@@ -52,25 +85,22 @@ class _ProfilePageState extends State<ProfilePage> {
               clipBehavior: Clip.none,
               alignment: Alignment.bottomRight,
               children: [
-                CircleAvatar(
-                    radius: 76,
-                    backgroundColor: const Color(0xffD9D9D9)
-                ),
-                Positioned(right: 9, bottom: 8, child: GestureDetector(
-                  child: Container(padding: EdgeInsets.all(4),decoration: BoxDecoration(color: Colors.black, shape: BoxShape.circle,
-                  ),
-                    child: Icon(
-                      Icons.edit,
-                      size: 30,
-                      color: Colors.white,
+                GestureDetector(
+                  onTap: _pickImageFromGallery,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 150,
+                    width: 150,
+                    child: _selectedImage != null ? Image.file(_selectedImage!) : const CircleAvatar(
+                        radius: 76,
+                        backgroundColor: Color(0xffD9D9D9)
                     ),
                   ),
                 ),
+              ]
                 ),
-              ],
-            ),
             SizedBox(height: 20),
-            Text(nickname, style: TextStyle(fontSize: 22, color: const Color(0xff1E1E1E))),
+            Text(user_name, style: TextStyle(fontSize: 22, color: const Color(0xff1E1E1E))),
             SizedBox(height: 5),
             Text('From. 12.24.2024', style: TextStyle(fontSize: 17, color: const Color(0xff1E1E1E))),
             Text('기록한 하루: 356개', style: TextStyle(fontSize: 17, color: const Color(0xff1E1E1E))),
@@ -86,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ListTile(
               leading: Icon(Icons.person, size: 35, color: const Color(0xff79747E)),
               title: Text('닉네임 변경하기', style: TextStyle(fontSize: 16, color: const Color(0xff1E1E1E))),
-              subtitle: Text(nickname, style: TextStyle(fontSize: 15, color: const Color(0xff6E6E6E))),
+              subtitle: Text(user_name, style: TextStyle(fontSize: 15, color: const Color(0xff6E6E6E))),
               onTap: () => showNicknameChangeDialog(context, updateNickname),
               trailing: Padding(
                 padding: EdgeInsets.only(right: 16.0),
@@ -115,7 +145,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ListTile(
               leading: Icon(Icons.email, size: 35, color: const Color(0xff79747E)),
               title: Text('내 소셜 계정', style: TextStyle(fontSize: 16, color: const Color(0xff1E1E1E))),
-              subtitle: Text('abc1232@gmail.com', style: TextStyle(fontSize: 15, color: const Color(0xff6E6E6E))
+              subtitle: Text(user_email, style: TextStyle(fontSize: 15, color: const Color(0xff6E6E6E))
               ),
               onTap: () {},
               trailing: Padding(
@@ -124,9 +154,27 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               contentPadding: EdgeInsets.only(left: 40.0),
             ),
+            GestureDetector(
+              onTap: () {
+                FireauthService().signout(context);
+                if (context.mounted) Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: EdgeInsets.all(20),
+                child: Center(
+                  child: Text(
+                    '로그아웃'
+                  ),
+                )
+              )
+            )
           ],
         ),
-      ),
+        ),
     );
   }
 }

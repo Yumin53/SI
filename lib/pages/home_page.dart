@@ -1,8 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:si/services/firestore.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final DateTime selectedDate;
+  const HomePage({Key? key, required this.selectedDate}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -10,40 +12,81 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isChecked1 = false;
+  int check1Value = 0;
   bool isChecked2 = false;
+  int check2Value = 0;
   bool isChecked3 = false;
+  int check3Value = 0;
   bool isChecked4 = false;
+  int check4Value = 0;
+
   bool isCloudSelected = false;
+  int cloudValue = 0;
   bool isSunSelected = false;
+  int sunnyValue = 0;
   bool isWindSelected = false;
+  int windValue = 0;
   bool isRainSelected = false;
+  int rainValue = 0;
   bool isSnowSelected = false;
+  int snowValue = 0;
+
   bool isShopSelected = false;
+  int shopValue = 0;
   bool isDateSelected = false;
+  int dateValue = 0;
   bool isSportsSelected = false;
+  int sportsValue = 0;
   bool isHomeSelected = false;
+  int homeValue = 0;
   bool isBookSelected = false;
+  int bookValue = 0;
+
 
   final _textController = TextEditingController();
+  String diaryEntry = '';
+
+  int? _selectedIconIndex; // Stores which one is selected
+
+  // List<String> greenActivity = [
+  //   '플라스틱 사용량 줄이기'
+  //
+  // ];
+  Future<void> getUserDiary() async {
+    DocumentSnapshot<Object?> userDoc = await FirestoreService().getDiary(widget.selectedDate);  // Call the function from the imported file
+    if (userDoc.exists) {
+      setState(() {
+        _selectedIconIndex = userDoc.get('flowerIndex');
+        _textController.text = userDoc.get('diary');
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserDiary();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-            backgroundColor:Color.fromRGBO(239, 244, 236, 1),
-            appBar: AppBar(
-              leading:BackButton(
-                  onPressed:(){
-                    FirebaseAuth.instance.signOut();
-                  }
-              ),
-              title: Text('12월 23일 월요일',
-                style: TextStyle(
-                  fontFamily: 'Jalnan2TTF',
-                  fontSize: 24,
-                ),
-              ),
-              backgroundColor: Color.fromRGBO(239, 244, 236, 1),
+    return Scaffold(
+        backgroundColor:Color.fromRGBO(239, 244, 236, 1),
+        appBar: AppBar(
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Text(
+            '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일',
+            style: TextStyle(
+              fontFamily: 'Jalnan2TTF',
+              fontSize: 24,
             ),
+          ),
+          backgroundColor: Color.fromRGBO(239, 244, 236, 1),
+        ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             floatingActionButton: SizedBox(
               width: 251,
@@ -57,7 +100,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onPressed: (){
-
+                  setState(() {
+                    // Save the diary entry text.
+                    diaryEntry = _textController.text;
+                    // (Process any other state variables as needed)
+                  });
+                  FirestoreService()
+                      .updateDiary(_selectedIconIndex, diaryEntry, widget.selectedDate);
+                  // ADDED: Once saved, pop and return true so CalendarPage marks the day.
+                  Navigator.pop(context, true);
                 },
                 backgroundColor: Color.fromRGBO(43,167,62, 1),
               ),
@@ -78,32 +129,50 @@ class _HomePageState extends State<HomePage> {
                                     Radius.circular(30)
                                 )
                             ),
-                            child:Column(
-                                children: [
-                                  SizedBox(height:28),
-                                  Text('오늘의 꽃은 무슨 색인가요?',
-                                    style: TextStyle(
-                                      fontFamily: 'Jalnan2TTF',
-                                      fontSize: 18,
-                                    ),
-                                    textAlign: TextAlign.center,
+                            child: Column(
+                              children: [
+                                SizedBox(height: 28),
+                                Text(
+                                  '오늘의 꽃은 무슨 색인가요?',
+                                  style: TextStyle(
+                                    fontFamily: 'Jalnan2TTF',
+                                    fontSize: 18,
                                   ),
-                                  SizedBox(height:22),
-                                  Container(
-                                      child:Row(
-                                          children: [
-                                            SizedBox(width:15),
-                                            FlutterLogo(size:50),
-                                            SizedBox(width:17.25),
-                                            FlutterLogo(size:50),
-                                            SizedBox(width:17.25),
-                                            FlutterLogo(size:50),
-                                            SizedBox(width:17.25),
-                                            FlutterLogo(size:50),
-                                            SizedBox(width:15)
-                                          ])
-                                  ),
-                                ])
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(5, (index) {
+                                    return Expanded(
+                                      child: IconButton(
+                                        padding: EdgeInsets.zero, // no extra spacing!
+                                        onPressed: () {
+                                          setState(() {
+                                            if (_selectedIconIndex == index) {
+                                              // Deselect if the selected icon is tapped again
+                                              _selectedIconIndex = null;
+                                            } else {
+                                              // Select the tapped icon
+                                              _selectedIconIndex = index;
+                                            }
+                                          });
+                                        },
+                                        icon: Opacity(
+                                          opacity: (_selectedIconIndex == index) ? 1.0 : 0.5,
+                                          child: Image.asset(
+                                            'lib/icons/${index + 1}.png',
+                                            width: 60,  // set your desired width
+                                            height: 60, // and height
+                                            fit: BoxFit.contain, // makes sure images scale down if needed
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ],
+                            )
                         ),
                         Container(
                             width:350,
@@ -124,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                                         fontSize: 18,
                                       ),
                                       textAlign: TextAlign.center),
-                                  SizedBox(height: 32),
+                                  SizedBox(height: 22),
                                   Container(
                                     child: Row(
                                       children: [
@@ -132,6 +201,7 @@ class _HomePageState extends State<HomePage> {
                                         Checkbox(value: isChecked1, onChanged: (val){
                                           setState(() {
                                             isChecked1 =val!;
+                                            check1Value = isChecked1 ? 1 : 0;
                                           });
                                         }),
                                         SizedBox(width:24),
@@ -151,6 +221,7 @@ class _HomePageState extends State<HomePage> {
                                         Checkbox(value: isChecked2, onChanged: (val){
                                           setState(() {
                                             isChecked2 =val!;
+                                            check2Value = isChecked2 ? 1 : 0;
                                           });
                                         }),
                                         SizedBox(width:24),
@@ -170,6 +241,7 @@ class _HomePageState extends State<HomePage> {
                                         Checkbox(value: isChecked3, onChanged: (val){
                                           setState(() {
                                             isChecked3 =val!;
+                                            check3Value = isChecked3 ? 1 : 0;
                                           });
                                         }),
                                         SizedBox(width:24),
@@ -189,6 +261,7 @@ class _HomePageState extends State<HomePage> {
                                         Checkbox(value: isChecked4, onChanged: (val){
                                           setState(() {
                                             isChecked4 =val!;
+                                            check4Value = isChecked4 ? 1 : 0;
                                           });
                                         }),
                                         SizedBox(width:24),
@@ -232,6 +305,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isSunSelected = !isSunSelected;
+                                                  sunnyValue = isSunSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -249,6 +323,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isCloudSelected = !isCloudSelected;
+                                                  cloudValue = isCloudSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -266,6 +341,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isWindSelected = !isWindSelected;
+                                                  windValue = isWindSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -283,6 +359,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isRainSelected = !isRainSelected;
+                                                  rainValue = isRainSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -300,6 +377,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isSnowSelected = !isSnowSelected;
+                                                  snowValue = isSnowSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -394,6 +472,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isShopSelected = !isShopSelected;
+                                                  shopValue = isShopSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -411,6 +490,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isDateSelected = !isDateSelected;
+                                                  dateValue = isDateSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -429,6 +509,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isSportsSelected = !isSportsSelected;
+                                                  sportsValue = isSportsSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -447,6 +528,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isHomeSelected = !isHomeSelected;
+                                                  homeValue = isHomeSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -465,6 +547,7 @@ class _HomePageState extends State<HomePage> {
                                               onPressed: () {
                                                 setState(() {
                                                   isBookSelected = !isBookSelected;
+                                                  bookValue = isBookSelected ? 1 : 0;
                                                 });
                                               },
                                               icon: ColorFiltered(
@@ -567,7 +650,6 @@ class _HomePageState extends State<HomePage> {
 
                 )
             )
-        )
-    );
+        );
   }
 }
