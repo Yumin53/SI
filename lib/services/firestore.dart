@@ -38,7 +38,8 @@ class FirestoreService {
         .set({
       'email': email,
       'name': name,
-      'streak': 0,
+      'streak': 1,
+      'lastUpdate': Timestamp.now(),
       'timestamp': Timestamp.now(),
     });
   }

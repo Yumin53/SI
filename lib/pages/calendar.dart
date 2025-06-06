@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:si/pages/profile.dart';
 import 'package:si/pages/garden.dart';
 
+import '../services/firestore.dart';
+
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
 
@@ -37,7 +39,7 @@ class _CalendarPageState extends State<CalendarPage> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
-            padding: const EdgeInsets.only(top: 79),
+            padding: const EdgeInsets.only(top: 97),
             child: Column(
               children: [
                 Container(
@@ -57,6 +59,17 @@ class _CalendarPageState extends State<CalendarPage> {
                         style: ElevatedButton.styleFrom(
                           shape: CircleBorder(),
                           backgroundColor: Colors.white,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 62, left:130),
+                        child: Text(
+                          FirestoreService().getMMDDYYYY(DateTime.now()),
+                          style: TextStyle(
+                            fontFamily: 'Jalnan2TTF',
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ],

@@ -1,11 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:si/pages/home_page.dart';
 import 'package:si/pages/profile.dart';
-import 'package:intl/intl.dart';
-import 'package:si/pages/profile.dart';
-import 'package:si/pages/calendar.dart';
 
 import '../services/firestore.dart';
 
@@ -50,7 +46,7 @@ class _GardenPageState extends State<GardenPage> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           body: Padding(
-            padding: const EdgeInsets.only(top: 30),
+            padding: const EdgeInsets.only(top: 48),
             child: Column(
               children: [
                 Container(
@@ -73,9 +69,9 @@ class _GardenPageState extends State<GardenPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 50, left:130),
+                        padding: const EdgeInsets.only(top: 55, left:130),
                         child: Text(
-                          "Date: $streak",
+                          "Streak: $streak",
                           style: TextStyle(
                             fontFamily: 'Jalnan2TTF',
                             fontSize: 15,
